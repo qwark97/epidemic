@@ -13,9 +13,6 @@ class Zwierzok:
         self.__is_immune = is_immune
         self.__is_alive = True
 
-    def __str__(self):
-        return f"Wiek: {self.__age}, {'chory' if self.__is_sick else 'zdrowy'}"
-
     @property
     def age(self):
         return self.__age
@@ -27,17 +24,36 @@ class Zwierzok:
     def is_sick(self):
         return self.__is_sick
 
-    @property
-    def is_first_phase(self):
-        return self.__sickness_phase_a
+    def become_sick(self):
+        self.__is_sick = True
+        self.is_in_first_phase = True
+
+    def get_well(self):
+        self.__is_sick = False
+        self.__is_immune = True
 
     @property
-    def is_second_phase(self):
+    def is_in_first_phase(self):
+        return self.__sickness_phase_a
+
+    @is_in_first_phase.setter
+    def is_in_first_phase(self, new_value):
+        self.__sickness_phase_a = new_value
+
+    @property
+    def is_in_second_phase(self):
         return self.__sickness_phase_b
+
+    @is_in_second_phase.setter
+    def is_in_second_phase(self, new_value):
+        self.__sickness_phase_b = new_value
 
     @property
     def is_immune(self):
         return self.__is_immune
+
+    def lost_immunity(self):
+        self.__is_immune = False
 
     @property
     def is_alive(self):

@@ -5,9 +5,9 @@ class State:
     def __init__(self, model):
         self.__t = model.t
         self.__all_living_animals = len(model.animals)
-        self.__all_sick_animals = sum([animal.is_sick for animal in model.animals])
-        self.__all_sick_animals_first_phase = sum([animal.is_sick for animal in model.animals if animal.is_first_phase])
-        self.__all_sick_animals_second_phase = sum([animal.is_sick for animal in model.animals if animal.is_second_phase])
+        self.__all_sick_animals = len([animal for animal in model.animals if animal.is_sick])
+        self.__all_sick_animals_first_phase = len([animal for animal in model.animals if animal.is_in_first_phase])
+        self.__all_sick_animals_second_phase = len([animal for animal in model.animals if animal.is_in_second_phase])
         self.__all_immune_animals = len([animal for animal in model.animals if animal.is_immune])
         self.__all_dead_animals = len(model.all_dead_animals)
 
