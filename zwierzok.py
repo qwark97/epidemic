@@ -1,10 +1,16 @@
 class Zwierzok:
-    def __init__(self, age, is_sick):
+    def __init__(self,
+                 age: int,
+                 is_sick: bool,
+                 phase_one: bool,
+                 phase_two: bool,
+                 is_immune: bool
+                 ):
         self.__age = age
         self.__is_sick = is_sick
-        self.__sickness_phase_a = True if is_sick else False
-        self.__sickness_phase_b = False
-        self.__is_immune = False
+        self.__sickness_phase_a = phase_one
+        self.__sickness_phase_b = phase_two
+        self.__is_immune = is_immune
         self.__is_alive = True
 
     def __str__(self):
@@ -14,6 +20,9 @@ class Zwierzok:
     def age(self):
         return self.__age
 
+    def age_up(self):
+        self.__age += 1
+
     @property
     def is_sick(self):
         return self.__is_sick
@@ -22,6 +31,5 @@ class Zwierzok:
     def is_alive(self):
         return self.__is_alive
 
-    @is_alive.setter
-    def is_alive(self, died):
-        self.__is_alive = died
+    def die(self):
+        self.__is_alive = False
