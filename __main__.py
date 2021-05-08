@@ -1,5 +1,6 @@
 from epidemy.animals_based_on_table import provide_animals
 from epidemy.epidemy_state import Model
+from epidemy.mocked_database import State
 
 
 def run():
@@ -11,6 +12,9 @@ def run():
         print('chore:', sum([animal.is_sick for animal in m.animals]))
         m.next_timeframe(first_group_born_rates, second_group_born_rates)
         print('---')
+
+    x = State.load()
+    print(x)
 
 
 if __name__ == '__main__':

@@ -1,4 +1,6 @@
 import random
+
+from epidemy.mocked_database import State
 from epidemy.zwierzok import Zwierzok
 
 
@@ -52,7 +54,7 @@ class Model:
                     is_immune=False
                 ))
 
-        return new_animals
+        self.__animals += new_animals
 
     def next_timeframe(self,
                        first_group_born_rates: [float],
@@ -60,18 +62,31 @@ class Model:
                        ):
         self.__t += 1
         self.__age_up()
-        animals_born = self.__birthrate_action(
+        # self.__next_stage_of_desease()
+        self.__birthrate_action(
             first_group_rate=random.choice(first_group_born_rates),
             second_group_rate=random.choice(second_group_born_rates),
         )
+        # self.__getting_infected()
+        # self.__deth_due_to_desease()
         self.__natural_death()
-        self.__animals = self.__animals + animals_born
+        state = State(self)
+        state.save()
 
     def __age_up(self):
         for animal in self.animals:
             animal.age_up()
 
     def __natural_death(self):
+        natural_death_ages = [5, 6, 7]
         for animal in self.animals:
-            if animal.age > 7:
+            if animal.age > random.choice(natural_death_ages):
                 animal.die()
+
+    @property
+    def t(self):
+        return self.__t
+
+    @property
+    def all_dead_animals(self):
+        return [animal for animal in self.__animals if not animal.is_alive]

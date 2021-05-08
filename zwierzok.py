@@ -28,6 +28,18 @@ class Zwierzok:
         return self.__is_sick
 
     @property
+    def is_first_phase(self):
+        return self.__sickness_phase_a
+
+    @property
+    def is_second_phase(self):
+        return self.__sickness_phase_b
+
+    @property
+    def is_immune(self):
+        return self.__is_immune
+
+    @property
     def is_alive(self):
         return self.__is_alive
 
