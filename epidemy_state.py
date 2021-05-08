@@ -1,4 +1,3 @@
-import numpy.random
 import random
 from epidemy.zwierzok import Zwierzok
 
@@ -10,15 +9,9 @@ class Model:
         self.__animals = animals
 
     @staticmethod
-    def __initial_sickness(percentage):
-        if 0 > percentage > 100 or type(percentage) != int:
-            raise Exception('Percentage value must be in range [0, 100] and has to be integer')
-        return percentage
-
-    @staticmethod
     def __is_sick(sickness_percentage: int):
         sickness_percentage = int(sickness_percentage)
-        return numpy.random.choice([False for _ in range(100-sickness_percentage)] + [True for _ in range(sickness_percentage)])
+        return random.choice([False for _ in range(100-sickness_percentage)] + [True for _ in range(sickness_percentage)])
 
     @property
     def animals(self):
