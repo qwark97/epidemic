@@ -1,8 +1,8 @@
 import json
 
-from epidemy.animals_based_on_table import provide_animals
-from epidemy.epidemy_state import Model
-from epidemy.mocked_database import State
+from epidemic.animals_based_on_table import provide_animals
+from epidemic.epidemy_state import Model
+from epidemic.mocked_database import State
 
 
 def run():

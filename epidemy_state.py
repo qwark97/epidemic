@@ -1,7 +1,7 @@
 import random
 
-from epidemy.mocked_database import State
-from epidemy.zwierzok import Zwierzok
+from epidemic.mocked_database import State
+from epidemic.zwierzok import Zwierzok
 
 
 class Model:

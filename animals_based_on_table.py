@@ -16,7 +16,7 @@ Wiek w u.j.c    Liczba zwierząt zdrowych    Liczba zwierząt chorych
 7               10                          3 ( 3 faza 2)
 ---------------------------------------------------------------------
 """
-from epidemy.zwierzok import Zwierzok
+from epidemic.zwierzok import Zwierzok
 
 
 def provide_animals():
