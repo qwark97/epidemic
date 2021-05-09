@@ -12,7 +12,8 @@ def run():
     second_group_born_rates = [0.09, 0.10, 0.11]             # age between [5-6]
     state = State(m)
     state.save()
-    for i in range(7):
+    number_of_stages = 7
+    for i in range(number_of_stages+1):
         print(f'faza: {i}')
         print('wszystkie żywe:', len(m.animals))
         print('\tzdrowe:', len([animal for animal in m.animals if not animal.is_sick]))
