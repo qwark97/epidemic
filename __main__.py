@@ -11,9 +11,15 @@ def run():
 
     state = State(m)
     state.save()
+    # inicjalizacja modelu na bazie danych z polecenia do zadania
+
     number_of_stages = 10
     table_head = "Wiek || Zdrowe | Odporne | Chore | Faza1 | Faza2 | Żywe | Do tej pory zmarłe"
     table_row_pattern = "%4s || %6s | %7s | %5s | %5s | %5s | %4s | %19s"
+
+    # każda iteracja pętli odpowiada za wyświetlenie rezultatów z danego etapu (począwszy od fazy inicjalnej)
+    # po czym na samym końcu następuje wywołanie metody "next_timeframe()", która to przeprowadza symulację w
+    # modelu. W ten sposób dane zostają zaktualizowane do następnego etapu pandemii
     for i in range(number_of_stages+1):
         summed_healthy = 0
         summed_immune = 0
