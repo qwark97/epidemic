@@ -13,16 +13,43 @@ def run():
     state = State(m)
     state.save()
     number_of_stages = 7
+    table_head = "Wiek || Zdrowe | Odporne | Chore | Faza1 | Faza2 | Żywe | Do tej pory zmarłe"
+    table_row_pattern = "%4s || %6s | %7s | %5s | %5s | %5s | %4s | %19s"
     for i in range(number_of_stages+1):
-        print(f'faza: {i}')
-        print('wszystkie żywe:', len(m.animals))
-        print('\tzdrowe:', len([animal for animal in m.animals if not animal.is_sick]))
-        print('\tchore:', len([animal for animal in m.animals if animal.is_sick]))
-        print('\t\tfaza 1:', len([animal for animal in m.animals if animal.is_in_first_phase]))
-        print('\t\tfaza 2:', len([animal for animal in m.animals if animal.is_in_second_phase]))
-        print('do tej pory zmarłe:', len(m.all_dead_animals))
-        print('---')
+        summed_healthy = 0
+        summed_immune = 0
+        summed_sick = 0
+        summed_phase_1 = 0
+        summed_phase_2 = 0
+        summed_alive = 0
+        summed_already_dead = 0
 
+        parsed = _parse_animals(m)
+        print(f'Faza: {i}')
+        print(table_head)
+        ages = sorted(parsed.keys())
+        for age in ages:
+            healthy = parsed.get(age, {}).get('healthy', 0)
+            immune = parsed.get(age, {}).get('immune', 0)
+            sick = parsed.get(age, {}).get('sick', 0)
+            phase_1 = parsed.get(age, {}).get('phase_1', 0)
+            phase_2 = parsed.get(age, {}).get('phase_2', 0)
+            alive = parsed.get(age, {}).get('alive', 0)
+            already_dead = parsed.get(age, {}).get('already_dead', 0)
+
+            print(table_row_pattern % (str(age), str(healthy), str(immune), str(sick), str(phase_1), str(phase_2), str(alive), str(already_dead)))
+
+            summed_healthy += healthy
+            summed_immune += immune
+            summed_sick += sick
+            summed_phase_1 += phase_1
+            summed_phase_2 += phase_2
+            summed_alive += alive
+            summed_already_dead += already_dead
+
+        print('='*77)
+        print(table_row_pattern % ('Suma', str(summed_healthy), str(summed_immune), str(summed_sick), str(summed_phase_1), str(summed_phase_2), str(summed_alive), str(summed_already_dead)))
+        print()
         m.next_timeframe(first_group_born_rates, second_group_born_rates)
 
     results = State.load()
@@ -74,6 +101,59 @@ def create_plot(data):
 
     plt.legend()
     plt.savefig("results.png")
+
+
+def _parse_animals(model):
+    res = {}
+    for animal in model.animals:
+        age = animal.age
+        if not res.get(age):
+            res[age] = {}
+
+        try:
+            res[age]['alive'] += 1
+        except KeyError:
+            res[age]['alive'] = 1
+
+        if animal.is_immune:
+            try:
+                res[age]['immune'] += 1
+            except KeyError:
+                res[age]['immune'] = 1
+
+        if animal.is_sick:
+            try:
+                res[age]['sick'] += 1
+            except KeyError:
+                res[age]['sick'] = 1
+        else:
+            try:
+                res[age]['healthy'] += 1
+            except KeyError:
+                res[age]['healthy'] = 1
+
+        if animal.is_in_first_phase:
+            try:
+                res[age]['phase_1'] += 1
+            except KeyError:
+                res[age]['phase_1'] = 1
+
+        if animal.is_in_second_phase:
+            try:
+                res[age]['phase_2'] += 1
+            except KeyError:
+                res[age]['phase_2'] = 1
+
+    for dead_animal in model.all_dead_animals:
+        age = dead_animal.age
+        if not res.get(age):
+            res[age] = {}
+        try:
+            res[age]['already_dead'] += 1
+        except KeyError:
+            res[age]['already_dead'] = 1
+
+    return res
 
 
 if __name__ == '__main__':
