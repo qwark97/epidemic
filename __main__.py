@@ -8,8 +8,7 @@ import numpy as np
 
 def run():
     m = Model(provide_animals())
-    first_group_born_rates = [0.13, 0.14, 0.15, 0.16, 0.17]  # age between [2-4]
-    second_group_born_rates = [0.09, 0.10, 0.11]             # age between [5-6]
+
     state = State(m)
     state.save()
     number_of_stages = 7
@@ -50,7 +49,7 @@ def run():
         print('='*77)
         print(table_row_pattern % ('Suma', str(summed_healthy), str(summed_immune), str(summed_sick), str(summed_phase_1), str(summed_phase_2), str(summed_alive), str(summed_already_dead)))
         print()
-        m.next_timeframe(first_group_born_rates, second_group_born_rates)
+        m.next_timeframe()
 
     results = State.load()
     create_plot(results)
