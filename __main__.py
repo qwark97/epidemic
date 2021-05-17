@@ -11,7 +11,7 @@ def run():
 
     state = State(m)
     state.save()
-    number_of_stages = 7
+    number_of_stages = 10
     table_head = "Wiek || Zdrowe | Odporne | Chore | Faza1 | Faza2 | Żywe | Do tej pory zmarłe"
     table_row_pattern = "%4s || %6s | %7s | %5s | %5s | %5s | %4s | %19s"
     for i in range(number_of_stages+1):
